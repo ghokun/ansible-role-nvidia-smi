@@ -16,7 +16,7 @@
   set_fact:
     current_compute_dict: "{{ current_compute_dict | default({}) | combine ( { item.split(', ')[0]: item.split(', ')[1].upper() } ) }}"
   changed_when: false
-  with_items: "{{current_compute_modes.stdout_lines}}"
+  with_items: "{{ current_compute_modes.stdout_lines }}"
 
 - name: Set GPU compute modes
   become: true
