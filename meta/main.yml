@@ -23,7 +23,7 @@ galaxy_info:
       versions:
         - all
   galaxy_tags:
-    - nvidia-smi
+    - nvidiasmi
     - nvidia
-    - GPU
-    - compute-mode
+    - gpu
+    - computemode
