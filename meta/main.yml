@@ -3,7 +3,7 @@ dependencies: []
 galaxy_info:
   role_name: nvidia_smi
   author: ghokun
-  description: Managa NVIDIA GPUs with nvidia-smi
+  description: Manage NVIDIA GPUs with nvidia-smi
   license: MIT
   min_ansible_version: "1.2"
   platforms:
