@@ -1,0 +1,29 @@
+---
+- name: Check if nvidia-smi is installed
+  stat:
+    path: /usr/bin/nvidia-smi
+  register: nvidia_smi_check
+  failed_when: not nvidia_smi_check.stat.exists
+  changed_when: false
+
+- name: Get current GPU compute modes
+  command: nvidia-smi --query-gpu=gpu_uuid,compute_mode --format=csv,noheader
+  register: current_compute_modes
+  changed_when: false
+  when: nvidia_smi_check.stat.exists
+
+- name: Populate current GPU dict
+  set_fact:
+    current_compute_dict: "{{ current_compute_dict | default({}) | combine ( { item.split(', ')[0]: item.split(', ')[1].upper() } ) }}"
+  changed_when: false
+  with_items: "{{current_compute_modes.stdout_lines}}"
+
+- name: Set GPU compute modes
+  become: true
+  command: nvidia-smi -i {{ item.key }} -c {{ item.value }}
+  with_dict: "{{ set_compute_modes }}"
+  failed_when: item.key not in current_compute_dict
+  when: >
+    nvidia_smi_check.stat.exists
+    and item.key in current_compute_dict
+    and current_compute_dict[item.key] != item.value
