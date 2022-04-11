@@ -1,7 +1,7 @@
 dependencies: []
 
 galaxy_info:
-  role_name: nvidia-smi
+  role_name: nvidia_smi
   author: ghokun
   description: Managa NVIDIA GPUs with nvidia-smi
   license: MIT
